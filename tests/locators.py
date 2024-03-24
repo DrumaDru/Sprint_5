@@ -46,3 +46,4 @@ class TestLocators():
     SOUSE_TAB = (By.XPATH, ".//span[text() = 'Соусы']")
     #вкладка "Начинки" в конструкторе
     FILLING_TAB = (By.XPATH, ".//span[text() = 'Начинки']")
+    CURRENT_TAB = (By.XPATH, ".//*[contains(@class, 'current')]")

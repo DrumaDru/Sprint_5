@@ -1,3 +1,4 @@
+import pytest
 from locators import TestLocators
 
 

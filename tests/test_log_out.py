@@ -1,54 +1,20 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+import pytest
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-import time
+from locators import TestLocators
 
-driver = webdriver.Chrome()
-driver.get("https://stellarburgers.nomoreparties.site/")
+class TestLogOut:
+    def test_log_out(self, driver, log_in, personal_account_page):
+        WebDriverWait(driver, 3).until(
+            expected_conditions.visibility_of_element_located(TestLocators.LOG_OUT_BUTTON))
 
-#найти на странице кнопку для входа и клинуть по ней
-driver.find_element(By.XPATH, ".//button[text()='Войти в аккаунт']").click()
+        log_out_button = driver.find_element(*TestLocators.LOG_OUT_BUTTON)
+        log_out_button.click()
 
+        WebDriverWait(driver, 3).until(
+            expected_conditions.visibility_of_element_located(TestLocators.ENTER_BUTTON_LOGIN))
 
-# Добавь явное ожидание для проверки перехода на форму заполнения логина и пароля
-WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//h2[text()='Вход']")))
+        enter_button_login = driver.find_element(*TestLocators.ENTER_BUTTON_LOGIN)
 
-#ввод в поле  email значения
-driver.find_element(By.XPATH, "//label[text()='Email']/following-sibling::input").click()
+        assert enter_button_login.text == 'Войти'
 
-email_input = driver.find_element(By.XPATH, "//label[text()='Email']/following-sibling::input")
-
-email_input.send_keys("andrey_maksimo_6_777@yandex.ru")
-
-
-#ввод в поле Пароль значения
-driver.find_element(By.XPATH, "//label[text()='Пароль']/following-sibling::input").click()
-
-password_input = driver.find_element(By.XPATH, "//label[text()='Пароль']/following-sibling::input")
-
-password_input.send_keys('MaVburgers7Op280291')
-
-#Поиск кнопки Войти и клик по ней
-
-driver.find_element(By.XPATH, ".//button[text()='Войти']").click()
-
-WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//button[text()='Оформить заказ']")))
-
-#Поиск кнопки Личный кабинет и клик по ней
-driver.find_element(By.XPATH, ".//p[text() = 'Личный Кабинет']").click()
-
-# Добавь явное ожидание для проверки перехода в личный кабинет
-WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//button[text()='Выход']")))
-
-#Найти кнопку Выйти и кликнуть по ней
-driver.find_element(By.XPATH, ".//button[text()='Выход']").click()
-
-# Добавь явное ожидание для проверки перехода на форму заполнения логина и пароля
-WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//h2[text()='Вход']")))
-
-assert driver.find_element(By.XPATH, ".//h2[text()='Вход']").text == 'Вход'
-
-time.sleep(5)
-
-driver.quit()

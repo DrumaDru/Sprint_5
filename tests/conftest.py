@@ -50,6 +50,8 @@ def login_page(driver):
 def personal_account_page(driver, log_in):
     personal_account = driver.find_element(*TestLocators.PERSONAL_ACCOUNT)
     personal_account.click()
+    WebDriverWait(driver, 3).until(
+        expected_conditions.visibility_of_element_located(TestLocators.PROFILE_TAB))
 
 
 @pytest.fixture(scope="function")
@@ -68,42 +70,3 @@ def log_in(driver, registration_data):
     enter_button_login.click()
     WebDriverWait(driver, 3).until(
         expected_conditions.visibility_of_element_located(TestLocators.CREATE_ORDER))
-
-
-
-@pytest.fixture(scope="function")
-def success_registration(driver, registration_data):
-    enter_to_account_button = driver.find_element(*TestLocators.ENTER_TO_ACCOUNT_BUTTON)
-    enter_to_account_button.click()
-    WebDriverWait(driver, 3).until(
-        expected_conditions.visibility_of_element_located(TestLocators.ENTER_BUTTON_LOGIN))
-    registration_link = driver.find_element(*TestLocators.REGISTRATION_LINK)
-    registration_link.click()
-    WebDriverWait(driver, 3).until(
-        expected_conditions.visibility_of_element_located(TestLocators.REGISTRATION_BUTTON))
-    input_name = driver.find_element(*TestLocators.INPUT_NAME)
-    name = registration_data['name']
-    input_name.send_keys(name)
-    input_email = driver.find_element(*TestLocators.INPUT_EMAIL)
-    input_email.click()
-    email = registration_data['mail']
-    input_email.send_keys(email)
-    input_password = driver.find_element(*TestLocators.INPUT_PASSWORD)
-    input_password.click()
-    password = registration_data['password']
-    input_password.send_keys(password)
-    registration_button = driver.find_element(*TestLocators.REGISTRATION_BUTTON)
-    registration_button.click()
-    WebDriverWait(driver, 3).until(
-        expected_conditions.visibility_of_element_located(TestLocators.ENTER_BUTTON_LOGIN))
-    input_email_login = driver.find_element(*TestLocators.INPUT_EMAIL_LOGIN)
-    input_email_login.send_keys(email)
-    input_password_login = driver.find_element(*TestLocators.INPUT_PASSWORD_LOGIN)
-    input_password_login.click()
-    input_password_login.send_keys(password)
-    enter_button_login = driver.find_element(*TestLocators.ENTER_BUTTON_LOGIN)
-    enter_button_login.click()
-
-
-
-
