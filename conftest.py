@@ -7,6 +7,8 @@ from selenium.webdriver.support import expected_conditions
 import test_data
 import random
 
+
+
 @pytest.fixture(scope="function")
 def driver():
     options = Options()

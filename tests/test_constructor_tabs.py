@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from locators import TestLocators
 
-class TestTabs:
+class TestConstructorTabs:
     def test_souse_tab(self, driver, log_in):
         souse_tab = driver.find_element(*TestLocators.SOUSE_TAB)
         souse_tab.click()
@@ -16,6 +16,7 @@ class TestTabs:
         assert 'current' in current_tab
 
     def test_bread_tab(self, driver, log_in):
+        #перехожу на вкладку "Соусы",чтобы из нее проверить переход на вкалдку "Булки"
         souse_tab = driver.find_element(*TestLocators.SOUSE_TAB)
         souse_tab.click()
 
